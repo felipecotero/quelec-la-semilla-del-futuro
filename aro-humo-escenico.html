@@ -1218,34 +1218,34 @@
   // ---------- Controles: nombre, explicación, rango ----------
   const S = {
     flow:{icon:"flow",name:"Caudal de humo",desc:"Cuánto humo sale por cada boquilla. 0 % apaga la máquina; 100 % es el máximo de la simulación.",min:0,max:100,step:1,v:55,unit:"%",d:0},
-    speed:{icon:"speed",name:"Velocidad de salida",desc:"Con qué fuerza sale el chorro. A mayor velocidad, el humo llega más lejos antes de frenarse.",min:0.1,max:4,step:0.05,v:1.2,unit:"m/s",d:2},
+    speed:{icon:"speed",name:"Velocidad de salida",desc:"Con qué fuerza sale el chorro. A mayor velocidad, el humo llega más lejos antes de frenarse.",min:0.1,max:4,step:0.05,v:0.4,unit:"m/s",d:2},
     spread:{icon:"spread",name:"Apertura del chorro",desc:"Ángulo del cono de salida. En 0° el chorro es una línea; valores altos lo abren como un abanico.",min:0,max:60,step:1,v:18,unit:"°",d:0},
-    life:{icon:"life",name:"Duración del humo",desc:"Cuántos segundos permanece visible cada partícula antes de disiparse. La niebla baja suele durar mucho más que el humo que sube.",min:0.5,max:30,step:0.5,v:4,unit:"s",d:1},
-    density:{icon:"density",name:"Densidad visual",desc:"Qué tan opaco se ve el humo. No cambia la cantidad, solo cuánto tapa lo que hay detrás.",min:5,max:100,step:1,v:35,unit:"%",d:0},
-    buoy:{icon:"buoy",name:"Fuerza de subida o caída",desc:"Con humo que sube, empuja hacia arriba. Con niebla baja, la hace caer. Más alto significa un movimiento vertical más rápido.",min:0,max:2,step:0.05,v:0.3,unit:"m/s²",d:2},
+    life:{icon:"life",name:"Duración del humo",desc:"Cuántos segundos permanece visible cada partícula antes de disiparse. La niebla baja suele durar mucho más que el humo que sube.",min:0.5,max:30,step:0.5,v:16,unit:"s",d:1},
+    density:{icon:"density",name:"Densidad visual",desc:"Qué tan opaco se ve el humo. No cambia la cantidad, solo cuánto tapa lo que hay detrás.",min:5,max:100,step:1,v:17,unit:"%",d:0},
+    buoy:{icon:"buoy",name:"Fuerza de subida o caída",desc:"Con humo que sube, empuja hacia arriba. Con niebla baja, la hace caer. Más alto significa un movimiento vertical más rápido.",min:0,max:2,step:0.05,v:0.8,unit:"m/s²",d:2},
     slide:{icon:"slide",name:"Deslizamiento por la gradería",desc:"Solo para niebla baja. Qué tanto la niebla que toca un escalón busca el borde y se derrama al escalón de abajo.",min:0,max:3,step:0.05,v:1.2,unit:"",d:2},
-    step:{icon:"step",name:"Separación entre perforaciones",desc:"Ángulo entre una boquilla y la siguiente alrededor del aro. Si 360 no es múltiplo de este valor, el último tramo queda más corto.",min:5,max:45,step:0.5,v:12.5,unit:"°",d:1},
+    step:{icon:"step",name:"Separación entre perforaciones",desc:"Ángulo entre una boquilla y la siguiente alrededor del aro. Si 360 no es múltiplo de este valor, el último tramo queda más corto.",min:5,max:45,step:0.5,v:18,unit:"°",d:1},
     radius:{icon:"radius",name:"Radio del aro",desc:"Distancia del centro del aro al eje del tubo.",min:0.5,max:6,step:0.05,v:2.5,unit:"m",d:2},
     tube:{icon:"tube",name:"Diámetro del tubo",desc:"Grosor de la tubería por la que circula el humo.",min:2,max:40,step:1,v:12,unit:"cm",d:0},
-    rx:{icon:"rx",name:"Inclinación del aro (eje X)",desc:"Inclina el aro hacia adelante o hacia atrás. En 0° está de pie; en -90° queda acostado.",min:-180,max:180,step:1,v:0,unit:"°",d:0},
+    rx:{icon:"rx",name:"Inclinación del aro (eje X)",desc:"Inclina el aro hacia adelante o hacia atrás. En 0° está de pie; en -90° queda acostado.",min:-180,max:180,step:1,v:60,unit:"°",d:0},
     ry:{icon:"ry",name:"Giro del aro (eje Y)",desc:"Gira el aro sobre su eje vertical, como una puerta que abre. En 90° queda de perfil al público.",min:-180,max:180,step:1,v:0,unit:"°",d:0},
     rz:{icon:"rz",name:"Rotación en su plano (eje Z)",desc:"Hace rodar el aro sobre sí mismo. Sirve para ubicar dónde cae la primera perforación.",min:-180,max:180,step:1,v:0,unit:"°",d:0},
     height:{icon:"height",name:"Altura del aro",desc:"Altura del centro del aro medida desde el piso de la plaza. Revisa abajo la luz libre para que no choque con la gradería.",min:0.3,max:15,step:0.05,v:6.2,unit:"m",d:2},
     zoff:{icon:"zoff",name:"Posición en profundidad",desc:"Mueve el aro hacia el frente (valores positivos) o hacia el fondo de la gradería (negativos).",min:-10,max:10,step:0.05,v:0,unit:"m",d:2},
     steps:{icon:"steps",name:"Número de escalones",desc:"Cantidad de niveles de la gradería. Suben desde el frente hacia el fondo.",min:1,max:25,step:1,v:8,unit:"",d:0},
-    riser:{icon:"riser",name:"Contrahuella",desc:"Alto de cada escalón. Es la caída que da la niebla al pasar de un nivel al siguiente.",min:10,max:80,step:1,v:40,unit:"cm",d:0},
+    riser:{icon:"riser",name:"Contrahuella",desc:"Alto de cada escalón. Es la caída que da la niebla al pasar de un nivel al siguiente.",min:10,max:80,step:1,v:56,unit:"cm",d:0},
     tread:{icon:"tread",name:"Huella",desc:"Fondo de cada escalón, es decir, la superficie plana donde se acumula la niebla.",min:30,max:150,step:1,v:80,unit:"cm",d:0},
     width:{icon:"width",name:"Ancho de la gradería",desc:"Largo total de la gradería de lado a lado. Fuera de ese ancho, el humo cae al piso de la plaza.",min:2,max:40,step:0.5,v:12,unit:"m",d:1},
     shk:{icon:"shk",name:"Oscuridad de la sombra",desc:"Cuánta luz bloquea el humo. Valores altos hacen que una nube densa deje la gradería y el humo que está detrás casi a oscuras.",min:0,max:0.6,step:0.01,v:0.14,unit:"",d:2},
-    li:{icon:"int",name:"Intensidad de la luz omnidireccional",desc:"Brillo de la luz que ilumina en todas las direcciones desde el punto marcado.",min:0,max:8,step:0.05,v:2.6,unit:"",d:2},
-    lx:{icon:"px",name:"Luz omnidireccional, posición X",desc:"Mueve la luz de izquierda (negativo) a derecha (positivo).",min:-12,max:12,step:0.05,v:0,unit:"m",d:2},
-    ly:{icon:"py",name:"Luz omnidireccional, altura",desc:"Altura de la luz sobre el piso.",min:0,max:16,step:0.05,v:7.5,unit:"m",d:2},
-    lz:{icon:"pz",name:"Luz omnidireccional, profundidad",desc:"Mueve la luz hacia el frente (positivo) o hacia el fondo (negativo).",min:-12,max:12,step:0.05,v:3,unit:"m",d:2}
+    li:{icon:"int",name:"Intensidad de la luz omnidireccional",desc:"Brillo de la luz que ilumina en todas las direcciones desde el punto marcado.",min:0,max:8,step:0.05,v:8,unit:"",d:2},
+    lx:{icon:"px",name:"Luz omnidireccional, posición X",desc:"Mueve la luz de izquierda (negativo) a derecha (positivo).",min:-12,max:12,step:0.05,v:-0.85,unit:"m",d:2},
+    ly:{icon:"py",name:"Luz omnidireccional, altura",desc:"Altura de la luz sobre el piso.",min:0,max:16,step:0.05,v:9.95,unit:"m",d:2},
+    lz:{icon:"pz",name:"Luz omnidireccional, profundidad",desc:"Mueve la luz hacia el frente (positivo) o hacia el fondo (negativo).",min:-12,max:12,step:0.05,v:5.15,unit:"m",d:2}
   };
   function spotDefs(k, side, x, color) {
     const n = `Spot ${side}`;
     S[k+"i"]={icon:"int",name:`${n}, intensidad`,desc:"Brillo del reflector. El haz se hace visible donde atraviesa el humo.",min:0,max:20,step:0.1,v:11,unit:"",d:1};
-    S[k+"a"]={icon:"cone",name:`${n}, apertura`,desc:"Ángulo del haz. Valores bajos dan un haz cerrado tipo cañón; altos, un baño amplio.",min:3,max:60,step:0.5,v:16,unit:"°",d:1};
+    S[k+"a"]={icon:"cone",name:`${n}, apertura`,desc:"Ángulo del haz. Valores bajos dan un haz cerrado tipo cañón; altos, un baño amplio.",min:3,max:60,step:0.5,v:30,unit:"°",d:1};
     S[k+"p"]={icon:"soft",name:`${n}, borde`,desc:"Suavidad del borde del haz. 0 % es un corte duro; 100 % difumina el borde hacia el centro.",min:0,max:100,step:1,v:35,unit:"%",d:0};
     S[k+"x"]={icon:"px",name:`${n}, posición X`,desc:"Dónde está colgado el reflector, de izquierda a derecha.",min:-15,max:15,step:0.05,v:x,unit:"m",d:2};
     S[k+"y"]={icon:"py",name:`${n}, altura`,desc:"Altura del reflector sobre el piso.",min:0,max:16,step:0.05,v:7,unit:"m",d:2};
@@ -1255,10 +1255,10 @@
     S[k+"tz"]={icon:"tz",name:`${n}, apunta a profundidad`,desc:"Profundidad del punto hacia donde apunta el haz.",min:-15,max:15,step:0.05,v:0,unit:"m",d:2};
     return color;
   }
-  const SPOTS = { s1: spotDefs("s1", "izquierdo", -9, "#1f3dff"), s2: spotDefs("s2", "derecho", 9, "#ff14b4") };
-  const OMNI_COLOR = "#8c1eff";
+  const SPOTS = { s1: spotDefs("s1", "izquierdo", -9, "#1f3dff"), s2: spotDefs("s2", "derecho", 9, "#14ffb1") };
+  const OMNI_COLOR = "#33ddff";
 
-  const P = { type:"rise", dir:"in", orient:"vert", lt:"omni", lc:OMNI_COLOR, s1c:SPOTS.s1, s2c:SPOTS.s2,
+  const P = { type:"fall", dir:"in", orient:"", lt:"omni", lc:OMNI_COLOR, s1c:SPOTS.s1, s2c:SPOTS.s2,
               omniOn:true, s1On:true, s2On:true, shadowOn:true };
   Object.keys(S).forEach(id => P[id] = S[id].v);
 
@@ -1752,7 +1752,8 @@
   }
   window.addEventListener("resize", resize);
 
-  const CFG_KEY = "aro-humo-escenico:config";
+  const PRESET_DEFAULT = {"flow":55,"speed":0.4,"spread":18,"life":16,"density":17,"buoy":0.8,"slide":1.2,"step":18,"radius":2.5,"tube":12,"rx":60,"ry":0,"rz":0,"height":6.2,"zoff":0,"steps":8,"riser":56,"tread":80,"width":12,"shk":0.14,"li":8,"lx":-0.85,"ly":9.95,"lz":5.15,"s1i":11,"s1a":30,"s1p":35,"s1x":-9,"s1y":7,"s1z":5,"s1tx":0,"s1ty":5,"s1tz":0,"s2i":11,"s2a":30,"s2p":35,"s2x":9,"s2y":7,"s2z":5,"s2tx":0,"s2ty":5,"s2tz":0,"type":"fall","dir":"in","lc":"#33ddff","s1c":"#1f3dff","s2c":"#14ffb1","omniOn":true,"s1On":true,"s2On":true,"shadowOn":true};
+  const CFG_KEY = "aro-humo-escenico:config-v2";
   const EXTRA = ["type","dir","lc","s1c","s2c","omniOn","s1On","s2On","shadowOn"];
   function getConfig() {
     const c = {}; Object.keys(S).forEach(k => c[k] = +P[k]); EXTRA.forEach(k => c[k] = P[k]); return c;
@@ -1796,7 +1797,8 @@
 
   paintGroups(); buildStands(); rebuild(); syncLights(); resize();
   pMat.uniforms.uDensity.value = +P.density / 100;
-  const DEFAULTS = getConfig();
+  applyConfig(PRESET_DEFAULT);
+  const DEFAULTS = PRESET_DEFAULT;
   try { const saved = localStorage.getItem(CFG_KEY); if (saved) applyConfig(JSON.parse(saved)); } catch (e) {}
   if (!WEBGL2) $("shadow-note").textContent = "Este navegador no soporta WebGL 2: las sombras quedan desactivadas.";
   frame();
