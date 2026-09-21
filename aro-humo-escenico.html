@@ -1210,7 +1210,9 @@
     apply:'<path d="M4 12l5 5L20 6"/>',
     pause:'<path d="M8 5v14M16 5v14"/>', play:'<path d="M7 4l13 8-13 8z" fill="currentColor"/>',
     clear:'<path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/>',
-    frame:'<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>'
+    frame:'<path d="M4 9V4h5M15 4h5v5M20 15v5h-5M9 20H4v-5"/>',
+    doc:'<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/>',
+    download:'<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/>'
   };
   const svg = k => `<svg viewBox="0 0 24 24" aria-hidden="true">${I[k]}</svg>`;
   const esc = s => s.replace(/"/g, "&quot;");
@@ -1327,6 +1329,20 @@
       <button type="button" id="cfg-save" ${tipAttrs("Guardar como predeterminada","Guarda todos los valores actuales en este navegador. La próxima vez que abras la página arrancará así.")} aria-label="Guardar como predeterminada">${svg("save")}</button>
       <button type="button" id="cfg-copy" ${tipAttrs("Copiar configuración","Muestra el texto con todos los valores actuales y lo copia. Pégalo en un mensaje para compartirlo o para que quede fijo en el archivo.")} aria-label="Copiar configuración">${svg("copy")}</button>
       <button type="button" id="cfg-reset" ${tipAttrs("Restablecer","Borra la configuración guardada en este navegador y vuelve a los valores de fábrica del archivo.")} aria-label="Restablecer">${svg("reset")}</button></div>
+     <div class="actions" style="margin-top:6px">
+      <button type="button" id="cfg-doc" ${tipAttrs("Ficha técnica para ingeniería","Genera y muestra la memoria técnica completa con cálculos para fabricación, tubería, boquillas, presurización, rigging y fluidos.")} aria-label="Ficha técnica para ingeniería" style="flex:2.2;font-size:12px;font-weight:700;color:var(--accent);border-color:rgba(0,194,255,0.4);display:inline-flex;gap:6px;align-items:center;justify-content:center">${svg("doc")} Ficha técnica ingeniería</button>
+      <button type="button" id="cfg-dl-doc" ${tipAttrs("Descargar archivo de texto (.txt)","Descarga directamente el archivo .txt con las especificaciones técnicas completas.")} aria-label="Descargar archivo de texto" style="flex:0.8;font-size:12px">${svg("download")}</button></div>
+     <div id="tech-doc-box" hidden style="margin-top:8px">
+       <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+         <span style="font-size:11px;font-weight:700;color:var(--accent);letter-spacing:0.04em">MEMORIA TÉCNICA ESCÉNICA</span>
+         <div style="display:flex;gap:4px">
+           <button type="button" id="doc-copy" style="font-size:11px;padding:2px 8px;height:24px;border-radius:4px;background:var(--field);color:var(--text);border:1px solid var(--line);cursor:pointer">Copiar</button>
+           <button type="button" id="doc-close" style="font-size:11px;padding:2px 8px;height:24px;border-radius:4px;background:var(--field);color:var(--text);border:1px solid var(--line);cursor:pointer">✕</button>
+         </div>
+       </div>
+       <textarea id="tech-doc-text" rows="12" readonly spellcheck="false" aria-label="Especificaciones técnicas en texto"
+         style="width:100%;background:#080b0f;color:#e1e7f0;border:1px solid var(--line);border-radius:6px;font:11px/1.45 'SFMono-Regular',Consolas,Menlo,monospace;padding:8px;resize:vertical;white-space:pre"></textarea>
+     </div>
      <div id="cfg-box" hidden style="margin-top:8px">
        <textarea id="cfg-text" rows="5" spellcheck="false" aria-label="Configuración en texto"
          style="width:100%;background:var(--field);color:var(--text);border:1px solid var(--line);border-radius:6px;font:12px/1.4 Archivo,Arial,sans-serif;padding:6px;resize:vertical"></textarea>
@@ -1793,6 +1809,214 @@
   $("cfg-reset").addEventListener("click", () => {
     try { localStorage.removeItem(CFG_KEY); } catch (e) {}
     applyConfig(DEFAULTS); frame(); msg("Valores de fábrica restablecidos.");
+  });
+
+  function generateTechDoc() {
+    const R = +P.radius;
+    const D = 2 * R;
+    const perim = 2 * Math.PI * R;
+    const tubeCm = +P.tube;
+    const tubeM = tubeCm / 100;
+    const rTubeM = tubeM / 2;
+    const areaSecM2 = Math.PI * rTubeM * rTubeM;
+    const areaSecCm2 = areaSecM2 * 10000;
+    const volM3 = perim * areaSecM2;
+    const volLitros = volM3 * 1000;
+    const step = +P.step;
+    const nozCount = Math.floor((360 - 1e-6) / step) + 1;
+    const distCm = (perim * step / 360) * 100;
+    const lastStep = 360 - (nozCount - 1) * step;
+    const evenStep = Math.abs(lastStep - step) < 1e-6;
+    const nRadM = Math.max(0.012, rTubeM * 0.32);
+    const nHoleDiamMm = (2 * nRadM * 0.8 * 1000).toFixed(1);
+
+    const h = +P.height;
+    const rx = +P.rx;
+    const ry = +P.ry;
+    const rz = +P.rz;
+    const zoff = +P.zoff;
+    const cotaMinAro = (h - R - rTubeM).toFixed(2);
+
+    let minClear = Infinity;
+    const vClear = new THREE.Vector3();
+    for (let k = 0; k < 180; k++) {
+      const a = k / 180 * Math.PI * 2;
+      vClear.set(R * Math.cos(a), R * Math.sin(a), 0).applyMatrix4(rig.matrixWorld);
+      minClear = Math.min(minClear, vClear.y - rTubeM - groundAt(vClear.x, vClear.z));
+    }
+    const clearanceStr = minClear < 0
+      ? `ALERTA DE COLISIÓN: El aro interseca la gradería en ${fmtNum(minClear, 2)} m`
+      : `${fmtNum(minClear, 2)} m (Sin interferencia física)`;
+
+    const tWallM = 0.002;
+    const dIntM = Math.max(0.01, tubeM - 2 * tWallM);
+    const areaMetalM2 = Math.PI * (tubeM * tubeM - dIntM * dIntM) / 4;
+    const pesoAluminioKg = (perim * areaMetalM2 * 2700).toFixed(1);
+    const pesoConductoFlexKg = (perim * 1.1).toFixed(1);
+
+    const isHeavy = P.type === "fall";
+    const dirMap = {
+      "in": "Concéntrica hacia adentro (Vórtice toroidal cerrado hacia el centro del portal)",
+      "out": "Radial hacia afuera (Dispersión perimétrica divergente)",
+      "front": "Frontal perpendicular hacia el público / arena",
+      "up": "Cenital hacia arriba",
+      "down": "Descendente hacia piso / gradería"
+    };
+    const orientDesc = (rx === 0 && ry === 0 && rz === 0) ? "Vertical (de pie como un portal)"
+      : (rx === -90 && ry === 0 && rz === 0) ? "Horizontal (paralelo al piso como corona)"
+      : `Inclinado (X: ${rx}°, Y: ${ry}°, Z: ${rz}°)`;
+
+    const now = new Date();
+    const fechaStr = now.toLocaleDateString("es-CO", { year:"numeric", month:"long", day:"numeric" }) + " " +
+      now.toLocaleTimeString("es-CO", { hour:"2-digit", minute:"2-digit" });
+
+    return `================================================================================
+  MEMORIA TÉCNICA Y FICHA DE FABRICACIÓN ESCÉNICA
+  PROYECTO: QUELEC Y LA SEMILLA DEL FUTURO
+  DISPOSITIVO: SISTEMA DE ARO DE HUMO ESCÉNICO (VÓRTICE Y PORTAL 3D)
+================================================================================
+Generado desde: Simulador 3D de Efectos Escénicos (Coordinación de Producción)
+Fecha de emisión: ${fechaStr}
+Versión de calibración: Preset Técnico Activo
+
+--------------------------------------------------------------------------------
+1. RESUMEN Y CRITERIO DE DISEÑO ESCÉNICO
+--------------------------------------------------------------------------------
+Dispositivo toroidal suspendido para la inyección simultánea y presurizada de
+humo/niebla escénica, configurado para materializar el efecto del "Portal hacia 
+el futuro" sobre la rampa y gradería de la plaza.
+
+• Régimen de fluido:           ${isHeavy ? "NIEBLA BAJA PESADA (efecto criogénico / hielo seco o base glicol con chiller)" : "HUMO TÉRMICO ASCENDENTE (máquina de niebla convencional)"}
+• Orientación del chorro:      ${dirMap[P.dir] || P.dir}
+• Posición geométrica del aro: ${orientDesc}
+
+--------------------------------------------------------------------------------
+2. ESPECIFICACIONES MECÁNICAS Y DE TUBERÍA DEL ARO
+--------------------------------------------------------------------------------
+• Radio interior al eje (R):         ${fmtNum(R, 2)} m
+• Diámetro total exterior (D):       ${fmtNum(D, 2)} m
+• Perímetro lineal del aro:          ${fmtNum(perim, 2)} m (${fmtNum(perim * 100, 0)} cm)
+• Diámetro del tubo conductor:       ${tubeCm} cm (${fmtNum(tubeCm * 10, 0)} mm / ${(tubeCm / 2.54).toFixed(1)}")
+• Radio de sección del tubo:         ${(tubeCm / 2).toFixed(1)} cm
+• Área de sección interna:           ${fmtNum(areaSecCm2, 1)} cm²
+• Volumen interno de la tubería:     ${fmtNum(volLitros, 1)} Litros (${volM3.toFixed(3)} m³)
+• Total perforaciones / boquillas:   ${nozCount} boquillas activas
+• Separación angular entre toberas:  ${step}° ${evenStep ? "(reparto simétrico completo)" : `(tramo de cierre: ${fmtNum(lastStep, 1)}°)`}
+• Separación lineal sobre el tubo:   ${fmtNum(distCm, 1)} cm entre centros de boquilla
+• Diámetro estimado de orificio:     ${nHoleDiamMm} mm (boquillas de inyección cónica)
+• Apertura de cono de salida:        ${P.spread}°
+• Estimación de materiales para corona:
+  - Opción A (Estructural rígida): Tubo de aluminio aleación 6061-T6 (e = 2 mm).
+    Peso aproximado tubería: ~${pesoAluminioKg} kg (sin herrajes).
+  - Opción B (Ultraligera desmontable): Conducto flexible espiralado o PEAD ligero
+    sobre cercha o bastidor circular. Peso aproximado: ~${pesoConductoFlexKg} kg.
+
+--------------------------------------------------------------------------------
+3. DATOS DE MONTAJE, RIGGING Y SEGURIDAD EN ALTURAS
+--------------------------------------------------------------------------------
+• Altura del centro del aro:         ${fmtNum(h, 2)} m sobre cota cero (suelo plaza).
+• Posición en profundidad (offset Z): ${fmtNum(zoff, 2)} m respecto al frente de gradería.
+• Ángulo de inclinación eje X (rx):  ${rx}°
+• Giro sobre eje vertical eje Y (ry):${ry}°
+• Rotación sobre su plano eje Z (rz):${rz}°
+• Cota inferior absoluta del tubo:   ${cotaMinAro} m
+• Luz libre mínima contra gradería:  ${clearanceStr}
+• Requerimientos de Rigging:
+  - Suspensión: Mínimo 3 a 4 puntos de tiro equidistantes con polipastos y guayas
+    de acero galvanizado (factor de seguridad 5:1 para zonas sobre elenco o público).
+  - Estabilidad eólica: En espacio abierto/semicubierto, anclar vientos laterales 
+    antioscilación al truss superior para contrarrestar esfuerzos de viento.
+
+--------------------------------------------------------------------------------
+4. PARÁMETROS TERMODINÁMICOS Y ALIMENTACIÓN DE FLUIDO
+--------------------------------------------------------------------------------
+• Caudal de salida operativo:        ${P.flow} % de la potencia de inyección
+• Velocidad lineal de eyección:      ${fmtNum(P.speed, 2)} m/s
+• Tasa de emisión por boquilla:      ${((+P.flow / 100) * 70).toFixed(1)} pulsos/segundo
+• Tiempo de vida visible (duración): ${fmtNum(P.life, 1)} segundos
+• Fuerza de flotabilidad / caída:    ${fmtNum(P.buoy, 2)} m/s² (${isHeavy ? "gravedad forzada hacia abajo" : "ascenso por convección"})
+• Densidad visual / opacidad:        ${P.density} %
+• Coeficiente de derrame en gradas:  ${fmtNum(P.slide, 2)} (comportamiento en contrahuella)
+• Distribución y colector de fluido:
+  - Colector de alimentación tipo anillo cerrado con MÍNIMO 2 puntos de inyección 
+    simétrica (a 0° y 180°) o 4 cuadrantes para evitar pérdida de carga perimétrica.
+  - Conexión de purga en el punto inferior del aro para drenaje de condensación.
+
+--------------------------------------------------------------------------------
+5. ILUMINACIÓN ASOCIADA Y COLORIMETRÍA ESCÉNICA
+--------------------------------------------------------------------------------
+• Luz Central Omnidireccional:
+  - Estado: ${P.omniOn ? "ENCENDIDA" : "APAGADA"} | Color: ${P.lc} | Intensidad: ${fmtNum(P.li, 2)}
+  - Posición: X = ${fmtNum(P.lx, 2)} m | Y = ${fmtNum(P.ly, 2)} m | Z = ${fmtNum(P.lz, 2)} m
+• Reflector Spot 1 (Izquierdo):
+  - Estado: ${P.s1On ? "ENCENDIDO" : "APAGADO"} | Color: ${P.s1c} | Intensidad: ${fmtNum(P.s1i, 1)}
+  - Posición colgado:   X = ${fmtNum(P.s1x, 2)} m | Y = ${fmtNum(P.s1y, 2)} m | Z = ${fmtNum(P.s1z, 2)} m
+  - Posición objetivo:  X = ${fmtNum(P.s1tx, 2)} m | Y = ${fmtNum(P.s1ty, 2)} m | Z = ${fmtNum(P.s1tz, 2)} m
+  - Apertura de haz:    ${fmtNum(P.s1a, 1)}° | Penumbra: ${P.s1p} %
+• Reflector Spot 2 (Derecho):
+  - Estado: ${P.s2On ? "ENCENDIDO" : "APAGADO"} | Color: ${P.s2c} | Intensidad: ${fmtNum(P.s2i, 1)}
+  - Posición colgado:   X = ${fmtNum(P.s2x, 2)} m | Y = ${fmtNum(P.s2y, 2)} m | Z = ${fmtNum(P.s2z, 2)} m
+  - Posición objetivo:  X = ${fmtNum(P.s2tx, 2)} m | Y = ${fmtNum(P.s2ty, 2)} m | Z = ${fmtNum(P.s2tz, 2)} m
+  - Apertura de haz:    ${fmtNum(P.s2a, 1)}° | Penumbra: ${P.s2p} %
+• Sombras volumétricas: ${P.shadowOn ? "ACTIVADAS (k = " + fmtNum(P.shk, 2) + ")" : "DESACTIVADAS"}
+
+--------------------------------------------------------------------------------
+6. GRADERÍA Y ESPACIO ESCÉNICO DE REFERENCIA
+--------------------------------------------------------------------------------
+• Escalones:              ${P.steps} niveles
+• Contrahuella (altura):  ${P.riser} cm (${fmtNum(+P.riser / 100, 2)} m)
+• Huella (profundidad):   ${P.tread} cm (${fmtNum(+P.tread / 100, 2)} m)
+• Ancho de gradería:      ${fmtNum(P.width, 1)} m
+• Desnivel total:         ${fmtNum(+P.steps * +P.riser / 100, 2)} m
+• Fondo total:            ${fmtNum(+P.steps * +P.tread / 100, 2)} m
+
+--------------------------------------------------------------------------------
+7. NOTAS TÉCNICAS PARA TALLER Y MONTAJE
+--------------------------------------------------------------------------------
+1. Las perforaciones deben avellanarse y desbarbarse internamente para minimizar 
+   silbidos y turbulencias aerodinámicas durante la eyección presurizada.
+2. Comprobar que la luz libre mínima calculada permita el tránsito seguro del elenco, 
+   acróbatas y de la Cama Voladora por la rampa escénica.
+3. Verificar que las mangueras de alimentación cuenten con aislamiento térmico si se 
+   utiliza generador criogénico / niebla refrigerada.
+================================================================================
+  FIN DEL DOCUMENTO TÉCNICO
+================================================================================`;
+  }
+
+  $("cfg-doc").addEventListener("click", () => {
+    const text = generateTechDoc();
+    $("tech-doc-box").hidden = false;
+    $("tech-doc-text").value = text;
+    $("tech-doc-text").focus();
+    $("tech-doc-text").select();
+    msg("Memoria técnica generada para ingeniería.");
+  });
+
+  $("cfg-dl-doc").addEventListener("click", () => {
+    const text = generateTechDoc();
+    const blob = new Blob([text], { type: "text/plain;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const d = new Date().toISOString().slice(0, 10);
+    a.href = url;
+    a.download = `ficha-tecnica-aro-humo-quelec-${d}.txt`;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+    msg("Archivo de especificaciones descargado (.txt).");
+  });
+
+  $("doc-copy").addEventListener("click", () => {
+    const text = $("tech-doc-text").value || generateTechDoc();
+    try {
+      navigator.clipboard.writeText(text).then(() => msg("Ficha técnica copiada al portapapeles."), () => msg("Selecciona el texto y cópialo."));
+    } catch(e) { msg("Selecciona el texto y cópialo."); }
+  });
+
+  $("doc-close").addEventListener("click", () => {
+    $("tech-doc-box").hidden = true;
   });
 
   paintGroups(); buildStands(); rebuild(); syncLights(); resize();
