@@ -233,6 +233,93 @@
       font-style: italic;
     }
 
+    /* Accesos Rápidos Hero */
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 16px;
+      margin-top: 28px;
+    }
+
+    .hero-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 22px;
+      border-radius: var(--radius-md);
+      text-decoration: none;
+      transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      flex: 1 1 290px;
+      max-width: 480px;
+    }
+
+    .hero-btn-primary {
+      background: linear-gradient(135deg, rgba(255, 61, 127, 0.18), rgba(0, 194, 255, 0.12));
+      border: 1px solid rgba(255, 61, 127, 0.45);
+      box-shadow: 0 4px 20px rgba(255, 61, 127, 0.18);
+    }
+
+    .hero-btn-primary:hover {
+      background: linear-gradient(135deg, rgba(255, 61, 127, 0.28), rgba(0, 194, 255, 0.22));
+      border-color: rgba(255, 61, 127, 0.8);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(255, 61, 127, 0.35);
+    }
+
+    .hero-btn-secondary {
+      background: rgba(255, 255, 255, 0.04);
+      border: 1px solid var(--border-subtle);
+    }
+
+    .hero-btn-secondary:hover {
+      background: rgba(0, 194, 255, 0.08);
+      border-color: rgba(0, 194, 255, 0.4);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 194, 255, 0.18);
+    }
+
+    .hero-btn-icon {
+      font-size: 26px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+
+    .hero-btn-text {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      flex-grow: 1;
+    }
+
+    .hero-btn-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: 15px;
+      font-weight: 700;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .hero-btn-sub {
+      font-size: 12px;
+      color: var(--text-muted);
+      line-height: 1.3;
+    }
+
+    .hero-btn-arrow {
+      width: 18px;
+      height: 18px;
+      color: var(--text-muted);
+      transition: transform 0.2s ease, color 0.2s ease;
+      flex-shrink: 0;
+    }
+
+    .hero-btn:hover .hero-btn-arrow {
+      transform: translateX(4px);
+      color: #ffffff;
+    }
+
     /* MÓDULO DESTACADO: SIMULADOR 3D ESCÉNICO */
     .section-title-wrap {
       display: flex;
@@ -460,6 +547,196 @@
       font-family: 'Space Grotesk', monospace;
     }
 
+    /* Estilos Específicos para la Maqueta 3D de la Plaza */
+    .plaza-card {
+      border-color: rgba(255, 61, 127, 0.35);
+      box-shadow: var(--shadow-flower);
+      margin-bottom: 28px;
+    }
+
+    .plaza-card:hover {
+      border-color: rgba(255, 61, 127, 0.7);
+      box-shadow: 0 0 50px rgba(255, 61, 127, 0.25);
+    }
+
+    .plaza-card::before {
+      background: radial-gradient(circle, rgba(255, 61, 127, 0.14), transparent 70%);
+    }
+
+    .btn-launch-plaza {
+      background: linear-gradient(135deg, #ff3d7f, #f5b041);
+      color: #ffffff;
+      box-shadow: 0 4px 20px rgba(255, 61, 127, 0.35);
+    }
+
+    .btn-launch-plaza:hover {
+      background: linear-gradient(135deg, #ff5c95, #f8c165);
+      box-shadow: 0 6px 28px rgba(255, 61, 127, 0.55);
+    }
+
+    .plaza-preview {
+      background: radial-gradient(circle at center, #10151f 0%, #06080b 100%);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      position: relative;
+      aspect-ratio: 16 / 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.85);
+    }
+
+    .plaza-led {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-family: 'Space Grotesk', monospace;
+      color: var(--accent-magenta);
+      background: rgba(255, 61, 127, 0.15);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(255, 61, 127, 0.35);
+      font-weight: 700;
+    }
+
+    .plaza-art {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      perspective: 700px;
+    }
+
+    .plaza-ring-outer {
+      position: absolute;
+      width: 175px;
+      height: 175px;
+      border-radius: 50%;
+      border: 1px dashed rgba(255, 255, 255, 0.22);
+      transform: rotateX(60deg);
+      animation: plazaPulse 5s ease-in-out infinite alternate;
+    }
+
+    .plaza-ring-mid {
+      position: absolute;
+      width: 130px;
+      height: 130px;
+      border-radius: 50%;
+      border: 2px solid rgba(255, 61, 127, 0.45);
+      transform: rotateX(60deg);
+    }
+
+    .plaza-arena-core {
+      position: absolute;
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(0, 194, 255, 0.35) 0%, rgba(0, 194, 255, 0.05) 75%);
+      border: 2px solid var(--accent-cyan);
+      box-shadow: 0 0 20px rgba(0, 194, 255, 0.5), inset 0 0 15px rgba(0, 194, 255, 0.4);
+      transform: rotateX(60deg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .plaza-arena-core span {
+      font-size: 8px;
+      font-weight: 800;
+      color: #ffffff;
+      font-family: 'Space Grotesk', monospace;
+      letter-spacing: 0.05em;
+      transform: rotateX(-60deg);
+      text-shadow: 0 0 6px rgba(0, 194, 255, 0.8);
+    }
+
+    .plaza-ramp-line {
+      position: absolute;
+      width: 125px;
+      height: 6px;
+      background: linear-gradient(to right, var(--accent-cyan), var(--accent-gold));
+      transform: rotateX(60deg) rotate(-35deg) translate(36px, 0);
+      border-radius: 3px;
+      box-shadow: 0 0 12px rgba(245, 176, 65, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+    }
+
+    .ramp-tag {
+      font-size: 7.5px;
+      font-weight: 800;
+      font-family: 'Space Grotesk', monospace;
+      color: var(--accent-gold);
+      background: rgba(0,0,0,0.85);
+      padding: 1px 4px;
+      border-radius: 2px;
+      border: 1px solid rgba(245, 176, 65, 0.3);
+      transform: rotate(35deg) rotateX(-60deg) translateY(-12px);
+      white-space: nowrap;
+    }
+
+    .plaza-portal-node {
+      position: absolute;
+      top: 24%;
+      right: 27%;
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background: var(--accent-magenta);
+      box-shadow: 0 0 16px var(--accent-magenta);
+      animation: blink 2s infinite ease-in-out;
+    }
+
+    .portal-tag {
+      position: absolute;
+      top: -15px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-size: 7.5px;
+      font-weight: 800;
+      font-family: 'Space Grotesk', monospace;
+      color: var(--accent-magenta);
+      background: rgba(0,0,0,0.85);
+      padding: 1px 4px;
+      border-radius: 2px;
+      border: 1px solid rgba(255, 61, 127, 0.4);
+    }
+
+    @keyframes plazaPulse {
+      0% { transform: rotateX(60deg) scale(0.96); opacity: 0.7; }
+      100% { transform: rotateX(60deg) scale(1.04); opacity: 1; }
+    }
+
+    .card-inline-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 14px;
+      font-size: 12px;
+      font-weight: 700;
+      font-family: 'Space Grotesk', monospace;
+      color: var(--accent-cyan);
+      text-decoration: none;
+      padding: 6px 12px;
+      background: rgba(0, 194, 255, 0.08);
+      border: 1px solid rgba(0, 194, 255, 0.2);
+      border-radius: 6px;
+      transition: all 0.2s ease;
+    }
+
+    .card-inline-link:hover {
+      background: rgba(0, 194, 255, 0.2);
+      border-color: rgba(0, 194, 255, 0.5);
+      transform: translateX(2px);
+      color: #ffffff;
+    }
+
     /* GRID DE MATRIZ DE PRODUCCIÓN */
     .matrix-grid {
       display: grid;
@@ -678,7 +955,9 @@
             <span class="pulse-dot"></span>
             Coordinación de Producción
           </span>
-          <span class="badge badge-stage">Gran Formato Escénico</span>
+          <a href="./quelec-maqueta-3d.html" class="badge badge-stage" style="text-decoration:none; cursor:pointer;" title="Abrir Maqueta 3D completa de la Plaza de Toros">
+            🏟️ Maqueta 3D Plaza
+          </a>
           <span class="badge badge-neutral">Arena Plaza · 15 Escenas</span>
         </div>
         <span class="badge badge-neutral" style="font-family: 'Space Grotesk', monospace;">
@@ -698,22 +977,118 @@
         <div class="hero-synopsis-quote">
           “En una ciudad gris y fría, donde está prohibido jugar, Quelec emprende un viaje fantástico hacia el futuro para recuperar una semilla capaz de transformar el mundo con color, imaginación y alegría.”
         </div>
+
+        <div class="hero-actions">
+          <a href="./quelec-maqueta-3d.html" class="hero-btn hero-btn-primary" id="hero-btn-maqueta">
+            <span class="hero-btn-icon">🏟️</span>
+            <div class="hero-btn-text">
+              <span class="hero-btn-title">
+                Maqueta 3D de la Plaza de Toros
+                <span class="badge badge-stage" style="font-size: 10px; padding: 2px 7px;">Completa</span>
+              </span>
+              <span class="hero-btn-sub">Arena (40m ø) · Graderías · Rampa (40m) · Capas técnicas</span>
+            </div>
+            <svg class="hero-btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+          
+          <a href="./aro-humo-escenico.html" class="hero-btn hero-btn-secondary" id="hero-btn-simulador">
+            <span class="hero-btn-icon">💨</span>
+            <div class="hero-btn-text">
+              <span class="hero-btn-title">
+                Simulador de Aro de Humo
+                <span class="badge badge-primary" style="font-size: 10px; padding: 2px 7px;">FX 3D</span>
+              </span>
+              <span class="hero-btn-sub">Vórtice toroidal de niebla · Memoria técnica de ingeniería (.txt)</span>
+            </div>
+            <svg class="hero-btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+        </div>
       </div>
     </header>
 
-    <!-- Módulo Activo: Simulador 3D -->
+    <!-- Módulos Interactivos 3D Escénicos -->
     <section id="simulador">
       <div class="section-title-wrap">
         <h2>
-          <span>Herramienta Activa</span>
-          <span class="badge badge-primary" style="font-size: 11px;">En Línea</span>
+          <span>Herramientas Interactivas 3D</span>
+          <span class="badge badge-primary" style="font-size: 11px;">2 Módulos En Línea</span>
         </h2>
-        <span class="sub">Three.js · Físicas de Fluido & Iluminación</span>
+        <span class="sub">Three.js · Maqueta Escénica & Simulación Física</span>
       </div>
 
+      <!-- Módulo Activo 1: Maqueta 3D Completa de la Plaza de Toros -->
+      <div class="feature-card plaza-card">
+        <div class="feature-grid">
+          <div class="feature-info">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+              <span class="badge badge-stage">Espacio Escénico Principal</span>
+              <span class="badge badge-neutral" style="font-size:10.5px;">Arena · Rampa · Portal · Graderías</span>
+            </div>
+            <h3>Maqueta 3D de la Plaza de Toros</h3>
+            <p>
+              Visualizador tridimensional navegable integral del recinto escénico en la Plaza de Toros. Permite analizar la escala real y distribución espacial de la <strong>arena circular (40 m de diámetro)</strong>, las graderías de espectadores, la <strong>rampa monumental de 40 m</strong> con pasillo de tránsito y la estructura elevada del Portal hacia el futuro. Incluye selector de capas constructivas, 6 cámaras prefijadas (General, Público, Arena, Planta, Frontal, Lateral), modo alambre, control de iluminación y lectura de cotas.
+            </p>
+
+            <div class="feature-tags">
+              <span class="tag-pill highlight">Arena Circular 40 m Ø</span>
+              <span class="tag-pill highlight">Rampa Escénica 40 m & Solera</span>
+              <span class="tag-pill highlight">Gestor de Capas Constructivas</span>
+              <span class="tag-pill">6 Puntos de Cámara & Vistas</span>
+              <span class="tag-pill">Giro Automático & Modo Alambre</span>
+              <span class="tag-pill">Control Lumínico & Medidas Reales</span>
+            </div>
+
+            <a href="./quelec-maqueta-3d.html" class="btn-launch btn-launch-plaza" id="launch-plaza">
+              <span>Abrir Maqueta 3D de la Plaza</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+
+          <div class="plaza-preview" aria-hidden="true">
+            <div class="sim-overlay-header">
+              <span class="plaza-led">● MODELO 3D ACTIVO</span>
+              <span style="font-size: 11px; color: var(--accent-magenta); font-family: monospace; font-weight: 700;">ARENA PLAZA 40M</span>
+            </div>
+
+            <div class="plaza-art">
+              <div class="plaza-ring-outer"></div>
+              <div class="plaza-ring-mid"></div>
+              <div class="plaza-arena-core">
+                <span>ARENA 40M</span>
+              </div>
+              <div class="plaza-ramp-line">
+                <span class="ramp-tag">RAMPA 40M</span>
+              </div>
+              <div class="plaza-portal-node">
+                <span class="portal-tag">PORTAL</span>
+              </div>
+            </div>
+
+            <div class="sim-overlay-footer">
+              <span>Capas: Estructura · Graderías · Rampa</span>
+              <span style="color: var(--accent-magenta);">Explorar Plaza 3D →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Módulo Activo 2: Simulador de Aro de Humo Escénico -->
       <div class="feature-card">
         <div class="feature-grid">
           <div class="feature-info">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+              <span class="badge badge-primary">Efectos Especiales FX</span>
+              <span class="badge badge-neutral" style="font-size:10.5px;">Portal Escénico</span>
+            </div>
             <h3>Simulador de Aro de Humo Escénico</h3>
             <p>
               Simulador tridimensional interactivo para el diseño y calibración física del efecto de vórtice toroidal de niebla. Permite proyectar en tiempo real la velocidad de tiro, tasa de dispersión, ángulo de toberas, interacción lumínica y <strong>exportar la memoria técnica detallada (.txt)</strong> con cálculos de tubería, volumen, presurización y rigging para el taller de ingeniería.
@@ -786,6 +1161,9 @@
             <li>Ruedas de carreola funcionales para rampa</li>
             <li>Accesorios integrados: lámpara, móvil y baúl</li>
           </ul>
+          <a href="./quelec-maqueta-3d.html" class="card-inline-link">
+            <span>🏟️ Ver rampa y arena en Maqueta 3D</span> →
+          </a>
         </article>
 
         <!-- Tarjeta 2: La Gran Orquídea y Flores Mecánicas -->
@@ -811,6 +1189,9 @@
             <li>6 a 8 flores periféricas telescópicas en arena</li>
             <li>Cálculo de cargas de viento y anclaje con guayas</li>
           </ul>
+          <a href="./quelec-maqueta-3d.html" class="card-inline-link">
+            <span>🏟️ Ver implantación en Arena 3D</span> →
+          </a>
         </article>
 
         <!-- Tarjeta 3: Juguetes Gigantes y Origami -->
@@ -819,7 +1200,7 @@
             <div class="card-icon">
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <polygon points="12 2 2 7 12 12 22 7 12 2"/>
-                <polyline points="2 17 12 22 22 17"/>
+                <polyline points="12 17 12 22 22 17"/>
                 <polyline points="2 12 12 17 22 12"/>
               </svg>
             </div>
@@ -857,6 +1238,9 @@
             <li>Truss circular suspendido entre 4 y 6 m de altura</li>
             <li>Interacción con la cuerda floja y tirolesa de la semilla</li>
           </ul>
+          <a href="./quelec-maqueta-3d.html" class="card-inline-link">
+            <span>🏟️ Explorar Rampa y Portal en Maqueta 3D</span> →
+          </a>
         </article>
 
         <!-- Tarjeta 5: Semilla y Manillas Interactivas -->
@@ -995,7 +1379,8 @@
         <strong>Quelec y la semilla del futuro</strong> · Coordinación de Producción y Dirección de Arte
       </div>
       <div class="footer-links">
-        <a href="./aro-humo-escenico.html">Simulador 3D</a>
+        <a href="./quelec-maqueta-3d.html" style="color: var(--accent-magenta); font-weight: 700;">🏟️ Maqueta 3D Plaza</a>
+        <a href="./aro-humo-escenico.html">💨 Simulador 3D Humo</a>
         <a href="#matriz-produccion">Matriz Técnica</a>
         <a href="https://github.com/felipecotero" target="_blank" rel="noopener">GitHub: @felipecotero</a>
       </div>
