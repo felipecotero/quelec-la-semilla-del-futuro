@@ -25,12 +25,16 @@ El portal de producción y el simulador escénico están disponibles en GitHub P
 - **Función**: Maqueta tridimensional navegable del espacio escénico completo: arena circular (40 m de diámetro), graderías de espectadores, rampa monumental (40 m), estructura del Portal hacia el futuro y niveles de solera.
 - **Herramientas**: Selector de capas constructivas, 6 cámaras prefijadas (General, Público, Arena, Planta, Frontal, Lateral), modo alambre, control de intensidad y posición de luz, giro automático y lectura de cotas métricas reales.
 
-### 2. Simulador 3D de Aro de Humo Escénico (`aro-humo-escenico.html`)
+### 2. Maqueta 3D con Simulación de Iluminación y Haces Volumétricos (`quelec-maqueta-3d-luces.html`)
+- **Motor**: Three.js con simulación de iluminación escénica teatral y cálculo de haces volumétricos en tiempo real.
+- **Función**: Calibración y diseño de luminarias en el recinto: fixtures teatrales individuales y grupos (elipsoidales de pasarela, frontales y contra), encendido/apagado selectivo, proyección de sombras reales, haces volumétricos visibles en sala y conmutación de luz de trabajo.
+
+### 3. Simulador 3D de Aro de Humo Escénico (`aro-humo-escenico.html`)
 - **Motor**: Three.js con simulación física interactiva.
 - **Función**: Calibración en tiempo real del vórtice toroidal de niebla (tiro escénico, dispersión, turbulencia de sala, temperatura de color e iluminación escénica) y exportación de fichas técnicas (.txt).
 - **Escena**: Efecto especial del *Portal hacia el futuro*.
 
-### 3. Matriz de Producción e Ingeniería Escénica (`index.html`)
+### 4. Matriz de Producción e Ingeniería Escénica (`index.html`)
 - **La Cama Aérea de la Abuela**: Estructura tubular ligera con ruedas de carreola (ring 27/29) y suspensión aérea en polipasto de 2 puntos para descenso por rampa y vuelo sobre la arena.
 - **Orquídea Gigante & Flores Telescópicas**: Mecanismo de plataforma tijera central (de 2 m hasta 10 m de elevación) con despliegue de pétalos en dos niveles y 6 a 8 flores periféricas en la arena.
 - **Juguetes Gigantes de la Escena del Juego**: Barco de origami (2.50 × 1.80 m), Peluche cósmico gigante y Balón inflable de 2 m con efecto de ponchadura.

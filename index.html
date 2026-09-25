@@ -266,6 +266,19 @@
       box-shadow: 0 8px 30px rgba(255, 61, 127, 0.35);
     }
 
+    .hero-btn-lights {
+      background: linear-gradient(135deg, rgba(245, 176, 65, 0.18), rgba(255, 61, 127, 0.12));
+      border: 1px solid rgba(245, 176, 65, 0.45);
+      box-shadow: 0 4px 20px rgba(245, 176, 65, 0.18);
+    }
+
+    .hero-btn-lights:hover {
+      background: linear-gradient(135deg, rgba(245, 176, 65, 0.3), rgba(255, 61, 127, 0.22));
+      border-color: rgba(245, 176, 65, 0.85);
+      transform: translateY(-2px);
+      box-shadow: 0 8px 30px rgba(245, 176, 65, 0.35);
+    }
+
     .hero-btn-secondary {
       background: rgba(255, 255, 255, 0.04);
       border: 1px solid var(--border-subtle);
@@ -737,6 +750,171 @@
       color: #ffffff;
     }
 
+    /* Estilos Específicos para el Módulo 3D de Luces y Haces */
+    .lights-card {
+      border-color: rgba(245, 176, 65, 0.4);
+      box-shadow: 0 0 35px rgba(245, 176, 65, 0.15);
+      margin-bottom: 28px;
+    }
+
+    .lights-card:hover {
+      border-color: rgba(245, 176, 65, 0.8);
+      box-shadow: 0 0 50px rgba(245, 176, 65, 0.3);
+    }
+
+    .lights-card::before {
+      background: radial-gradient(circle, rgba(245, 176, 65, 0.15), transparent 70%);
+    }
+
+    .btn-launch-lights {
+      background: linear-gradient(135deg, #f5b041, #ff9426);
+      color: #06090f;
+      font-weight: 800;
+      box-shadow: 0 4px 20px rgba(245, 176, 65, 0.35);
+    }
+
+    .btn-launch-lights:hover {
+      background: linear-gradient(135deg, #f8c165, #ffa84d);
+      box-shadow: 0 6px 28px rgba(245, 176, 65, 0.55);
+    }
+
+    .lights-preview {
+      background: radial-gradient(circle at center, #14111c 0%, #050508 100%);
+      border: 1px solid rgba(245, 176, 65, 0.25);
+      border-radius: var(--radius-md);
+      padding: 20px;
+      position: relative;
+      aspect-ratio: 16 / 10;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      overflow: hidden;
+      box-shadow: inset 0 0 35px rgba(0, 0, 0, 0.9);
+    }
+
+    .lights-led {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-family: 'Space Grotesk', monospace;
+      color: var(--accent-gold);
+      background: rgba(245, 176, 65, 0.15);
+      padding: 3px 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(245, 176, 65, 0.35);
+      font-weight: 700;
+    }
+
+    .lights-art {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      pointer-events: none;
+      overflow: hidden;
+    }
+
+    .lights-truss {
+      position: absolute;
+      top: 18px;
+      width: 78%;
+      height: 5px;
+      background: #242933;
+      border-radius: 3px;
+      border: 1px solid #3c4250;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      padding: 0 10px;
+      z-index: 3;
+    }
+
+    .fixture-spot {
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #f5b041;
+      box-shadow: 0 0 8px #f5b041;
+    }
+
+    .fixture-spot.cyan {
+      background: #00c2ff;
+      box-shadow: 0 0 8px #00c2ff;
+    }
+
+    .fixture-spot.magenta {
+      background: #ff3d7f;
+      box-shadow: 0 0 8px #ff3d7f;
+    }
+
+    .beam-left {
+      position: absolute;
+      top: 20px;
+      left: 18%;
+      width: 140px;
+      height: 180px;
+      background: linear-gradient(to bottom, rgba(245, 176, 65, 0.5) 0%, rgba(245, 176, 65, 0.08) 70%, transparent 100%);
+      clip-path: polygon(48% 0%, 52% 0%, 100% 100%, 0% 100%);
+      transform-origin: 50% 0%;
+      transform: rotate(22deg);
+      animation: beamSwayLeft 7s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+    }
+
+    .beam-right {
+      position: absolute;
+      top: 20px;
+      right: 18%;
+      width: 140px;
+      height: 180px;
+      background: linear-gradient(to bottom, rgba(0, 194, 255, 0.5) 0%, rgba(0, 194, 255, 0.08) 70%, transparent 100%);
+      clip-path: polygon(48% 0%, 52% 0%, 100% 100%, 0% 100%);
+      transform-origin: 50% 0%;
+      transform: rotate(-22deg);
+      animation: beamSwayRight 6s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+    }
+
+    .beam-center {
+      position: absolute;
+      top: 20px;
+      left: calc(50% - 60px);
+      width: 120px;
+      height: 185px;
+      background: linear-gradient(to bottom, rgba(255, 61, 127, 0.45) 0%, rgba(255, 61, 127, 0.05) 75%, transparent 100%);
+      clip-path: polygon(47% 0%, 53% 0%, 100% 100%, 0% 100%);
+      transform-origin: 50% 0%;
+      animation: beamSwayCenter 8s ease-in-out infinite alternate;
+      mix-blend-mode: screen;
+    }
+
+    @keyframes beamSwayLeft {
+      0% { transform: rotate(18deg); opacity: 0.7; }
+      100% { transform: rotate(26deg); opacity: 0.95; }
+    }
+
+    @keyframes beamSwayRight {
+      0% { transform: rotate(-18deg); opacity: 0.7; }
+      100% { transform: rotate(-26deg); opacity: 0.95; }
+    }
+
+    @keyframes beamSwayCenter {
+      0% { transform: rotate(-4deg); opacity: 0.6; }
+      100% { transform: rotate(4deg); opacity: 0.9; }
+    }
+
+    .lights-floor-pool {
+      position: absolute;
+      bottom: 20px;
+      width: 150px;
+      height: 40px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse at center, rgba(245, 176, 65, 0.5) 0%, rgba(0, 194, 255, 0.25) 45%, transparent 75%);
+      filter: blur(4px);
+    }
+
     /* GRID DE MATRIZ DE PRODUCCIÓN */
     .matrix-grid {
       display: grid;
@@ -958,6 +1136,9 @@
           <a href="./quelec-maqueta-3d.html" class="badge badge-stage" style="text-decoration:none; cursor:pointer;" title="Abrir Maqueta 3D completa de la Plaza de Toros">
             🏟️ Maqueta 3D Plaza
           </a>
+          <a href="./quelec-maqueta-3d-luces.html" class="badge badge-neutral" style="text-decoration:none; cursor:pointer; color:var(--accent-gold); border-color:rgba(245,176,65,0.35); background:rgba(245,176,65,0.08);" title="Abrir Maqueta 3D con Simulación de Iluminación y Haces">
+            💡 Simulación de Luces 3D
+          </a>
           <span class="badge badge-neutral">Arena Plaza · 15 Escenas</span>
         </div>
         <span class="badge badge-neutral" style="font-family: 'Space Grotesk', monospace;">
@@ -983,10 +1164,25 @@
             <span class="hero-btn-icon">🏟️</span>
             <div class="hero-btn-text">
               <span class="hero-btn-title">
-                Maqueta 3D de la Plaza de Toros
-                <span class="badge badge-stage" style="font-size: 10px; padding: 2px 7px;">Completa</span>
+                Maqueta 3D de la Plaza
+                <span class="badge badge-stage" style="font-size: 10px; padding: 2px 7px;">Espacio</span>
               </span>
               <span class="hero-btn-sub">Arena (40m ø) · Graderías · Rampa (40m) · Capas técnicas</span>
+            </div>
+            <svg class="hero-btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="5" y1="12" x2="19" y2="12"></line>
+              <polyline points="12 5 19 12 12 19"></polyline>
+            </svg>
+          </a>
+
+          <a href="./quelec-maqueta-3d-luces.html" class="hero-btn hero-btn-lights" id="hero-btn-luces">
+            <span class="hero-btn-icon">💡</span>
+            <div class="hero-btn-text">
+              <span class="hero-btn-title">
+                Simulador de Iluminación 3D
+                <span class="badge" style="background:rgba(245,176,65,0.2); color:var(--accent-gold); border-color:rgba(245,176,65,0.4); font-size:10px; padding:2px 7px;">Luces & Haces</span>
+              </span>
+              <span class="hero-btn-sub">Fixtures escénicos · Elipsoidales · Sombras · Haces visibles</span>
             </div>
             <svg class="hero-btn-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
               <line x1="5" y1="12" x2="19" y2="12"></line>
@@ -1017,9 +1213,9 @@
       <div class="section-title-wrap">
         <h2>
           <span>Herramientas Interactivas 3D</span>
-          <span class="badge badge-primary" style="font-size: 11px;">2 Módulos En Línea</span>
+          <span class="badge badge-primary" style="font-size: 11px;">3 Módulos En Línea</span>
         </h2>
-        <span class="sub">Three.js · Maqueta Escénica & Simulación Física</span>
+        <span class="sub">Three.js · Modelado Escénico, Diseño de Luces & Simulación Física</span>
       </div>
 
       <!-- Módulo Activo 1: Maqueta 3D Completa de la Plaza de Toros -->
@@ -1081,7 +1277,66 @@
         </div>
       </div>
 
-      <!-- Módulo Activo 2: Simulador de Aro de Humo Escénico -->
+      <!-- Módulo Activo 2: Maqueta 3D con Diseño de Iluminación y Haces Volumétricos -->
+      <div class="feature-card lights-card">
+        <div class="feature-grid">
+          <div class="feature-info">
+            <div style="display:flex; align-items:center; gap:8px; margin-bottom:12px;">
+              <span class="badge" style="background:rgba(245,176,65,0.15); color:var(--accent-gold); border-color:rgba(245,176,65,0.35);">Diseño de Iluminación Escénica</span>
+              <span class="badge badge-neutral" style="font-size:10.5px;">Fixtures · Elipsoidales · Haces Volumétricos</span>
+            </div>
+            <h3>Maqueta 3D con Iluminación & Haces</h3>
+            <p>
+              Simulador interactivo avanzado con <strong>aparatos de luz teatral mapeados en el espacio de la plaza</strong>. Permite encender, apagar y calibrar luminarias individuales o grupos (elipsoidales de pasarela, frontales y contra), proyectar <strong>sombras en tiempo real</strong>, visualizar los <strong>haces volumétricos cruzando la atmósfera de la arena</strong> y conmutar luz de trabajo para el equipo técnico.
+            </p>
+
+            <div class="feature-tags">
+              <span class="tag-pill" style="color:var(--accent-gold); border-color:rgba(245,176,65,0.35); background:rgba(245,176,65,0.08);">Aparatos de Luz Teatral (Fixtures)</span>
+              <span class="tag-pill highlight">Haces Volumétricos Visibles</span>
+              <span class="tag-pill highlight">Cálculo de Sombras en Tiempo Real</span>
+              <span class="tag-pill">Control por Focos & Grupos</span>
+              <span class="tag-pill">Conmutador de Luz de Trabajo</span>
+              <span class="tag-pill">Vistas de Cámara & Órbita Libre</span>
+            </div>
+
+            <a href="./quelec-maqueta-3d-luces.html" class="btn-launch btn-launch-lights" id="launch-lights">
+              <span>Abrir Maqueta con Luces 3D</span>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12"></line>
+                <polyline points="12 5 19 12 12 19"></polyline>
+              </svg>
+            </a>
+          </div>
+
+          <div class="lights-preview" aria-hidden="true">
+            <div class="sim-overlay-header">
+              <span class="lights-led">● ILUMINACIÓN ESCÉNICA</span>
+              <span style="font-size: 11px; color: var(--accent-gold); font-family: monospace; font-weight: 700;">HACES & SOMBRAS</span>
+            </div>
+
+            <div class="lights-art">
+              <div class="lights-truss">
+                <div class="fixture-spot"></div>
+                <div class="fixture-spot cyan"></div>
+                <div class="fixture-spot magenta"></div>
+                <div class="fixture-spot"></div>
+                <div class="fixture-spot cyan"></div>
+              </div>
+              <div class="beam-left"></div>
+              <div class="beam-right"></div>
+              <div class="beam-center"></div>
+              <div class="lights-floor-pool"></div>
+            </div>
+
+            <div class="sim-overlay-footer">
+              <span>Fixtures: Elipsoidales · Sombras · Haces</span>
+              <span style="color: var(--accent-gold);">Calibrar Luces 3D →</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Módulo Activo 3: Simulador de Aro de Humo Escénico -->
       <div class="feature-card">
         <div class="feature-grid">
           <div class="feature-info">
@@ -1341,6 +1596,9 @@
             <li>
               <strong>Diseño de Iluminación</strong>
               <span>Software Capture / Visualización 3D</span>
+              <a href="./quelec-maqueta-3d-luces.html" class="card-inline-link" style="margin-top: 4px; padding: 4px 8px; font-size: 11px;">
+                <span>💡 Abrir Simulador de Luces 3D</span> →
+              </a>
             </li>
             <li>
               <strong>Rigging y Maquinaria Aérea</strong>
@@ -1380,6 +1638,7 @@
       </div>
       <div class="footer-links">
         <a href="./quelec-maqueta-3d.html" style="color: var(--accent-magenta); font-weight: 700;">🏟️ Maqueta 3D Plaza</a>
+        <a href="./quelec-maqueta-3d-luces.html" style="color: var(--accent-gold); font-weight: 700;">💡 Maqueta con Luces 3D</a>
         <a href="./aro-humo-escenico.html">💨 Simulador 3D Humo</a>
         <a href="#matriz-produccion">Matriz Técnica</a>
         <a href="https://github.com/felipecotero" target="_blank" rel="noopener">GitHub: @felipecotero</a>
